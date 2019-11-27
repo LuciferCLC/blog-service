@@ -10,6 +10,7 @@ exports.mongoose = mongoose
 // 数据库
 exports.connect = () => {
   // 连接数据库
+  mongoose.set('useCreateIndex', true)
   mongoose.connect(config.MONGODB.uri, { useNewUrlParser: true})
 
   // 连接错误
