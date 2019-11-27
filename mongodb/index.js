@@ -11,7 +11,10 @@ exports.mongoose = mongoose
 exports.connect = () => {
   // 连接数据库
   mongoose.set('useCreateIndex', true)
-  mongoose.connect(config.MONGODB.uri, { useNewUrlParser: true})
+  mongoose.connect(config.MONGODB.uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
 
   // 连接错误
   mongoose.connection.on('error', (error) => {
