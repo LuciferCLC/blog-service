@@ -40,6 +40,6 @@ exports.INFO = {
   name: 'by_blog',
   version: '1.0.0',
   author: 'nolan',
-  site: 'https://nolan.cc',
+  site: 'http://nolan.cc',
   powered: ['Vue2', 'Nuxt.js', 'Node.js', 'MongoDB', 'koa', 'Nginx']
 }

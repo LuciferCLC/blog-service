@@ -2,7 +2,7 @@ const authIsVerified = require('../utils/auth')
 
 module.exports = async (ctx, next) => {
   // 拦截器
-  const allowedOrigins = ['https://nolan.cc', 'https://admin.nolan.cc', 'file://']
+  const allowedOrigins = ['http://nolan.cc', 'http://admin.nolan.cc', 'file://']
   const origin = ctx.request.headers.origin || ''
   if (allowedOrigins.includes(origin) || origin.includes('localhost')) {
     ctx.set('Access-Control-Allow-Origin', origin)

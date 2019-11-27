@@ -1,8 +1,8 @@
 // 路由管理
 const Router = require('koa-router')
 
-const config = require('./config')
-const controller = require('./controller')
+const config = require('../config')
+const controller = require('../controller')
 // const authIsVerified = require('./utils/auth')
 
 const router = new Router({
