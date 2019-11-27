@@ -21,8 +21,8 @@ exports.AUTH = {
 }
 
 exports.EMAIL = {
-  account: argv.EMAIL_account || 'your_email_account',
-  password: argv.EMAIL_password || 'your_email_password'
+  account: argv.EMAIL_account || 'luciferclc@foxmail.com',
+  password: argv.EMAIL_password || 'kmvyqgasjvgbbjbg'
 }
 
 exports.BAIDU = {
