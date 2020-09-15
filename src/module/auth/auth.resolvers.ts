@@ -1,0 +1,57 @@
+import { UnauthorizedException, NotFoundException } from '@nestjs/common';
+import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
+
+import { md5Decode, createToken } from '@/common/utils';
+import { Permissions } from '@/common/decorator/Permissions.decorator';
+
+import { AuthService } from './auth.service';
+import { AuthDto, InfoRequredDto } from './dto/auth.dto';
+import { Info } from './decorators/auth';
+
+@Resolver('Auth')
+export class AuthResolvers {
+  constructor(private readonly authService: AuthService) {}
+
+  /**
+   * 登录
+   * @param res RESPONSE
+   * @param body BODY
+   */
+  @Query()
+  public async login(@Args() args: AuthDto) {
+    const auth = await this.authService.findOne({ username: args.username });
+    if (auth) {
+      if (auth.password === md5Decode(args.password)) {
+        const token = createToken({ username: args.username });
+        return { token, lifeTime: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7 };
+      } else {
+        throw new UnauthorizedException('Password wrong');
+      }
+    } else {
+      throw new UnauthorizedException('Account does not exist');
+    }
+  }
+
+  @Query()
+  public async getInfo() {
+    return await this.authService.findOne();
+  }
+
+  @Mutation()
+  @Permissions()
+  public async updateUserInfo(@Info() userInfo: InfoRequredDto) {
+    const auth = await this.authService.findOne({ _id: userInfo._id });
+    if (auth) {
+      if (auth.password !== md5Decode(userInfo.oldPassword)) {
+        throw new UnauthorizedException('Password wrong');
+      }
+      const password = userInfo.password || userInfo.oldPassword;
+      return this.authService.update({
+        ...userInfo,
+        password: md5Decode(password)
+      });
+    } else {
+      throw new NotFoundException();
+    }
+  }
+}

@@ -1,0 +1,15 @@
+type Mutation {
+  postLike(likeInfo: LikeInput!): Message
+}
+
+input LikeInput {
+  _id: ObjectId!
+  type: LikeType!
+}
+
+enum LikeType {
+  Article
+  Comment
+}
+
+scalar ObjectId

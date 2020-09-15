@@ -1,0 +1,40 @@
+type Query {
+  getLinks(
+    offset: Float
+    limit: Float
+    keyword: String
+  ): Links
+}
+
+
+type Mutation {
+  createLink(linkInfo: CreateInfoInput!): LinksItem
+  updateLink(linkInfo: UpdateInfoInput!): LinksItem
+  deleteLink(_id: ObjectID): Message
+}
+
+input CreateInfoInput {
+  name: String!
+  url: String!
+}
+
+input UpdateInfoInput {
+  _id: ObjectID!
+  name: String
+  url: String
+}
+
+type Links {
+  total: Float
+  offset: Float!
+  limit: Float!
+  docs: [LinksItem]
+}
+
+type LinksItem {
+  _id: ObjectID
+  url: String
+  name: String
+}
+
+scalar ObjectID
